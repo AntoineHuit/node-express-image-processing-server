@@ -20,7 +20,7 @@ const filename = (request, file, callback) => {
 }
 
 const fileFilter = (request, file, callback) => {
-    if (file.mimetype === "image/png") {
+    if (file.mimetype !== "image/png") {
         request.fileValidationError = "Wrong file type"
         callback(null, false, {Error: "Wrong file type"})
     } else {
@@ -29,8 +29,8 @@ const fileFilter = (request, file, callback) => {
 }
 
 const upload = multer({
-    fileFilter: fileFilter(),
-    storage: storage
+    fileFilter,
+    storage
 })
 
 router.post('upload', upload.single('photo'), (request, response) => {
