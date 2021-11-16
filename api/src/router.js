@@ -9,7 +9,7 @@ const router = Router()
 //Let's write a function called filename. It should take request, file, and callback as its parameters.
 const filename = (request, file, callback) => {
     //Inside the function body make a call to callback() passing in null as the first argument and file.originalname as the second argument.
-    callback(null, file.originalname)
+    callback(null, file.originalname);
 }
 
 /* 
@@ -20,7 +20,7 @@ Pass an object literal as the only argument.
 const storage = multer.diskStorage({
     destination: "api/uploads/", 
     filename
-})
+});
 
 const fileFilter = (request, file, callback) => {
     if (file.mimetype !== "image/png") {
@@ -29,16 +29,17 @@ const fileFilter = (request, file, callback) => {
     } else {
         callback(null, true) 
     }
-}
+};
 
 const upload = multer({
     fileFilter,
     storage
-})
+});
 
-router.post('upload', upload.single('photo'), (request, response) => {
-    if (request.fileValidationError) return response.status(400).json({error: request.fileValidationError})
+router.post('/upload', upload.single('photo'), (request, response) => {
+    if (request.fileValidationError) return response.status(400).json({error: request.fileValidationError});
     
-    return response.status(201).json({success: true})
-})
-module.exports = router
+    return response.status(201).json({success: true});
+});
+
+module.exports = router;
